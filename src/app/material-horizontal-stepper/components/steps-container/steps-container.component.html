@@ -1,0 +1,27 @@
+<form [formGroup]="parentForm" (ngSubmit)="saveForm()">
+  <mat-stepper #stepper>
+    <mat-step [stepControl]="$any(formArray.at(0))"
+              label="Fill out your personal details">
+      <app-step1-form [stepOneForm]="$any(formArray.at(0))"></app-step1-form>
+    </mat-step>
+    <mat-step [stepControl]="$any(formArray.at(1))"
+              label="Fill out your address">
+      <app-step2-form [stepTwoForm]="$any(formArray.at(0))"></app-step2-form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button
+                type="button"
+                matStepperPrevious>Back
+        </button>
+        <button type="submit" mat-button>Submit</button>
+        <button mat-button
+                type="button"
+                (click)="stepper.reset()">Reset
+        </button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</form>
