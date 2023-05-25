@@ -5,21 +5,21 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'stepper',
+    redirectTo: 'dashboard',
   },
   {
-    path: 'todo',
+    path: 'dashboard',
     loadChildren: () =>
-      import('./todo-declarative/todo-declarative.module').then(
-        (module) => module.TodoDeclarativeModule,
+      import('./dashboard/dashboard.module').then(
+        (module) => module.DashboardModule,
       ),
   },
   {
-    path: 'stepper',
+    path: 'custom-directive',
     loadChildren: () =>
       import(
-        './material-horizontal-stepper/material-horizontal-stepper.module'
-      ).then((module) => module.MaterialHorizontalStepperModule),
+        './permission-custom-directive/permission-custom-directive.module'
+      ).then((module) => module.PermissionCustomDirectiveModule),
   },
 ];
 
