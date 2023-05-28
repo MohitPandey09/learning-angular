@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
 import { map, Observable } from 'rxjs';
-import { Todo } from '../../todo';
+import { ITodo } from '../../todo';
 
 @Component({
   selector: 'app-todo-list',
@@ -13,8 +13,8 @@ export class TodoListComponent {
 
   private todoService: TodoService = inject(TodoService);
 
-  public todo$: Observable<Todo[]> = this.todoService.getTodos().pipe(
-    map((todo: Todo[] | null) => {
+  public todo$: Observable<ITodo[]> = this.todoService.getTodos().pipe(
+    map((todo: ITodo[] | null) => {
       if (!todo) return [];
       return todo;
     }),

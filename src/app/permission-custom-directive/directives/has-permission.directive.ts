@@ -1,17 +1,14 @@
 import {
   Directive,
+  inject,
   Input,
   OnInit,
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import {
-  AdminPermission,
-  ManagerPermission,
-  Roles,
-  StaffPermission,
-} from '../permission';
+import { Roles, View } from '../permission';
 import { ScopeService } from '../services/scope.service';
+import { PermissionService } from '../services/permission/permission.service';
 
 @Directive({
   selector: '[hasPermission]',
@@ -20,52 +17,36 @@ export class HasPermissionDirective implements OnInit {
   @Input()
   hasPermission!: string;
 
-  scope!: string;
-  canShow = false;
+  @Input()
+  hasPermissionView!: View;
 
-  constructor(
-    private scopeService: ScopeService,
-    private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef,
-  ) {}
+  private permissionsService: PermissionService = inject(PermissionService);
+  private scopeService: ScopeService = inject(ScopeService);
+  private templateRef: TemplateRef<unknown> = inject(TemplateRef);
+  private viewContainer: ViewContainerRef = inject(ViewContainerRef);
 
   ngOnInit(): void {
-    this.scopeService.scope$.subscribe((changedScope: Roles) => {
-      this.scope = changedScope;
-      this.checkPermissions();
+    this.scopeService.scope$.subscribe((scope: Roles) => {
+      this.checkPermissions(scope);
     });
   }
 
   /**
    * to check permissions for particular user
    */
-  checkPermissions(): void {
-    switch (this.scope) {
-      case Roles.ADMIN:
-        this.canShow = AdminPermission.includes(this.hasPermission);
-        this.showElement(this.canShow);
-        break;
-      case Roles.MANAGER:
-        this.canShow = ManagerPermission.includes(this.hasPermission);
-        this.showElement(this.canShow);
-        break;
-      case Roles.STAFF:
-        this.canShow = StaffPermission.includes(this.hasPermission);
-        this.showElement(this.canShow);
-        break;
-      default:
-        this.showElement(this.canShow);
-        break;
-    }
+  checkPermissions(scope: Roles): void {
+    this.permissionsService
+      .getPermission(scope, this.hasPermissionView, this.hasPermission)
+      .subscribe((show: boolean) => this.showElement(show));
   }
 
   /**
    * to create/clear view element
-   * @param canShow
+   * @param show
    */
-  showElement(canShow: boolean): void {
+  showElement(show: boolean): void {
     this.viewContainer.clear();
-    if (canShow) {
+    if (show) {
       this.viewContainer.createEmbeddedView(this.templateRef);
     }
   }

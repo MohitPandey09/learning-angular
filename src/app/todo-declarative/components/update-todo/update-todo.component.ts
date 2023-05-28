@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddTodoComponent } from '../add-todo/add-todo.component';
-import { Todo } from '../../todo';
+import { ITodo } from '../../todo';
 import { fetchTodoByIdFn } from '../../todoFn';
 import { Observable } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['../add-todo/add-todo.component.scss'],
 })
 export class UpdateTodoComponent extends AddTodoComponent implements OnInit {
-  protected todoToUpdate$: Observable<Todo | undefined> = fetchTodoByIdFn();
+  protected todoToUpdate$: Observable<ITodo | undefined> = fetchTodoByIdFn();
 
   constructor() {
     super();
@@ -24,7 +24,7 @@ export class UpdateTodoComponent extends AddTodoComponent implements OnInit {
    * To patch data in to-do form
    */
   public fetchTodoById(): void {
-    this.todoToUpdate$.subscribe((todo: Todo | undefined) =>
+    this.todoToUpdate$.subscribe((todo: ITodo | undefined) =>
       !todo ? null : this.todoForm.patchValue(todo),
     );
   }
