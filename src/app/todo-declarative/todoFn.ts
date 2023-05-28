@@ -2,12 +2,12 @@ import { TodoService } from './services/todo.service';
 import { inject } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { map, mergeMap, Observable } from 'rxjs';
-import { Todo } from './todo';
+import { ITodo } from './todo';
 
 /**
  * To fetch to-do by id
  */
-export const fetchTodoByIdFn = function (): Observable<Todo | undefined> {
+export const fetchTodoByIdFn = function (): Observable<ITodo | undefined> {
   const todoService: TodoService = inject(TodoService);
 
   return inject(ActivatedRoute).params.pipe(

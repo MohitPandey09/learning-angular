@@ -5,19 +5,19 @@
   </a>
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">
-    <li class="nav-item" *hasPermission="'sidebar_home'">
+    <li class="nav-item" *hasPermission="sidebar.HOME; view: view.SIDEBAR">
       <a href="#" class="nav-link active" aria-current="page">
         <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
         Home
       </a>
     </li>
-    <li *hasPermission="'sidebar_dashboard'">
+    <li *hasPermission="sidebar.DASHBOARD; view: view.SIDEBAR">
       <a href="#" class="nav-link text-white">
         <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
         Dashboard
       </a>
     </li>
-    <li *hasPermission="'sidebar_orders'">
+    <li *hasPermission="sidebar.ORDERS; view: view.SIDEBAR">
       <a href="#" class="nav-link text-white"
          data-bs-toggle="collapse"
          data-bs-target="#orders-collapse"
@@ -34,13 +34,13 @@
         </ul>
       </div>
     </li>
-    <li *hasPermission="'sidebar_products'">
+    <li *hasPermission="sidebar.PRODUCTS; view: view.SIDEBAR">
       <a href="#" class="nav-link text-white">
         <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
         Products
       </a>
     </li>
-    <li *hasPermission="'sidebar_customers'">
+    <li *hasPermission="sidebar.CUSTOMERS; view: view.SIDEBAR">
       <a href="#" class="nav-link text-white">
         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
         Customers
